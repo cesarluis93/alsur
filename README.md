@@ -1,2 +1,0 @@
-# alsur
-Proyecto de videojuegos
