@@ -59,9 +59,11 @@ public class HealthScript : MonoBehaviour {
 	}
 
 	void OnGUI() {
-		GUI.Label(new Rect(10, 10, 100, 20), "Score: " + score.ToString(), labelStyle);
-		GUI.Label(new Rect(10, 40, 100, 20), "Points: " + healthPoints.ToString(), labelStyle);
-		Debug.Log ("Score: " + score);
-		Debug.Log ("Health: " + healthPoints);
+		if (this.gameObject.tag == "Player") {
+			GUI.Label(new Rect(10, 10, 100, 20), "Score: " + score.ToString(), labelStyle);
+			GUI.Label(new Rect(10, 40, 100, 20), "Points: " + healthPoints.ToString(), labelStyle);
+			Debug.Log ("Score: " + score);
+			Debug.Log ("Health: " + healthPoints);		
+		}
 	}
 }
