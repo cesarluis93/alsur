@@ -27,20 +27,32 @@ public class EnemyScript : MonoBehaviour {
 	void Update () {
 		cooldown -= 1;
 		Fire ();
+		MovePlayer();
 	}
 
-	void Move(float h,float v){
+	void MovePlayer() {
+		Vector3 dir = Globals.player.transform.position - transform.position;
+    	dir = transform.InverseTransformDirection(dir);
+    	float angle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
+    	//angle += transform.rotation.y - 90f;
+    	// Normalize
+    	Debug.Log(angle);
+    	angle /= 180f;
+    	Move(angle, 0.8f);
+	}
+
+	void Move(float h, float v){
 		anim.SetFloat ("inputV", v);
 		float moveZ = v * velocity * Time.deltaTime;
 		transform.Rotate (0, h * turnVelocity, 0);
-		transform.position += transform.forward * Time.deltaTime * velocity * inputV;
+		transform.position += transform.forward * Time.deltaTime * velocity * v;
 	}
 
 	void OnCollisionEnter(Collision other){
 		prevPos = transform.position;
 		prevRot = transform.rotation;
 		if(other.gameObject.CompareTag("weapon")){
-			gameObject.transform.rotation = new Quaternion (0, gameObject.transform.rotation.y, 0, 0);
+			//gameObject.transform.rotation = new Quaternion (0, gameObject.transform.rotation.y, 0, 0);
 			if (selectedWeapon != null) {
 				selectedWeapon.transform.localPosition = new Vector3 (2f, 0f, 1f);
 				selectedWeapon.transform.parent = null;
@@ -55,7 +67,7 @@ public class EnemyScript : MonoBehaviour {
 	}
 
 	void OnCollisionExit(Collision other){
-		transform.rotation = new Quaternion (0, transform.rotation.y, 0, 0);
+		//transform.rotation = new Quaternion (0, transform.rotation.y, 0, 0);
 		rbody.velocity = Vector3.zero;
 		transform.position = prevPos;
 		transform.rotation = prevRot;

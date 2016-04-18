@@ -36,6 +36,7 @@ public class PlayerScript : MonoBehaviour {
 	}
 
 	void Move(float h, float v){
+		//Debug.Log(h);
 		anim.SetFloat ("inputV", v);
 		float moveZ = v * velocity * Time.deltaTime;
 		transform.Rotate (0, h * turnVelocity, 0);
@@ -45,7 +46,7 @@ public class PlayerScript : MonoBehaviour {
 	void OnCollisionEnter(Collision other){
 		prevPos = transform.position;
 		prevRot = transform.rotation;
-		gameObject.transform.rotation = new Quaternion (0, gameObject.transform.rotation.y, 0, 0);
+		//gameObject.transform.rotation = new Quaternion (0, gameObject.transform.rotation.y, 0, 0);
 		if(other.gameObject.CompareTag("weapon")){
 			if (selectedWeapon != null) {
 				selectedWeapon.transform.localPosition = new Vector3 (2f, 0f, 1f);
