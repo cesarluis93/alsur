@@ -24,6 +24,9 @@ public class EnemyScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (Globals.player.transform.position == null) {
+			return;
+		}
 		cooldown -= 1;
 		RotateToPlayer();
 		if (inRange (attackRange)) {
@@ -47,6 +50,9 @@ public class EnemyScript : MonoBehaviour {
 	}
 
 	void RotateToPlayer(){
+		if (Globals.player == null) {
+			return;
+		}
 		Vector3 dir = Globals.player.transform.position - transform.position;
 		Quaternion rotation = Quaternion.LookRotation (dir);
 		transform.rotation=rotation;

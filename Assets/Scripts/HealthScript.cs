@@ -50,7 +50,9 @@ public class HealthScript : MonoBehaviour {
 		}
 
 		if(shot) {
-			Globals.player.GetComponent<HealthScript>().AddScore(Globals.rangeScore);
+			if (this.gameObject.tag != "Player") {
+				Globals.player.GetComponent<HealthScript>().AddScore(Globals.rangeScore);
+			}
 			Debug.Log("bullet damage");
 			ApplyDamage (Globals.bulletDamage);
 			rbody.velocity = Vector3.zero;
