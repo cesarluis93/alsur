@@ -24,7 +24,7 @@ public class EnemyScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Globals.player.transform.position == null) {
+		if (Globals.player == null) {
 			return;
 		}
 		cooldown -= 1;
@@ -38,7 +38,10 @@ public class EnemyScript : MonoBehaviour {
 		}
 	}
 
-	bool inRange(float range){
+	bool inRange(float range) {
+		if (Globals.player == null) {
+			return false;
+		}
 		float distance = Vector3.Distance (Globals.player.transform.position,transform.position);
 		if (distance <= range) {
 			return true;

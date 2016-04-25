@@ -14,6 +14,7 @@ public class CameraScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (player == null) {
+			Application.LoadLevel("GameOver");
 			return;
 		}
 		move(player.transform.position.x, transform.position.y, player.transform.position.z);
