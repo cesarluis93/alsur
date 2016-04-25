@@ -11,8 +11,6 @@ public class EnemyScript : MonoBehaviour {
 	public float cooldownTime = 100f;
 	private float cooldown;
 	public GameObject selectedWeapon = null;
-	private Vector3 prevPos;
-	private Quaternion prevRot;
 
 	// Use this for initialization
 	void Start () {
@@ -27,10 +25,14 @@ public class EnemyScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		cooldown -= 1;
-		MovePlayer();
+		RotateToPlayer();
 		if (inRange (attackRange)) {
+			anim.SetFloat ("inputV", 0);
 			Fire ();
 		} 
+		else {
+			Move(0.8f);
+		}
 	}
 
 	bool inRange(float range){
@@ -43,28 +45,19 @@ public class EnemyScript : MonoBehaviour {
 		}
 
 	}
-	void MovePlayer() {
+
+	void RotateToPlayer(){
 		Vector3 dir = Globals.player.transform.position - transform.position;
-    	//dir = transform.InverseTransformDirection(dir);
-    	//float angle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
 		Quaternion rotation = Quaternion.LookRotation (dir);
-    	//angle += transform.rotation.y - 90f;
 		transform.rotation=rotation;
-    	// Normalize
-		Move(rotation.y, 0.8f);
 	}
 
-	void Move(float h, float v){
-		float moveZ = v * velocity * Time.deltaTime;
-		if (!inRange (attackRange)) {
-			anim.SetFloat ("inputV", v);
-			transform.position += transform.forward * Time.deltaTime * velocity * v;	
-		}
+	void Move(float velocity){
+		anim.SetFloat ("inputV", 0.8f);
+		transform.position += transform.forward * Time.deltaTime * velocity;	
 	}
 
 	void OnCollisionEnter(Collision other){
-		prevPos = transform.position;
-		prevRot = transform.rotation;
 		if(other.gameObject.CompareTag("weapon")){
 			//gameObject.transform.rotation = new Quaternion (0, gameObject.transform.rotation.y, 0, 0);
 			if (selectedWeapon != null) {
@@ -79,14 +72,7 @@ public class EnemyScript : MonoBehaviour {
 			selectedWeapon.transform.localScale = new Vector3 (0.3f, 0.3f, 0.3f);
 		}
 	}
-
-	void OnCollisionExit(Collision other){
-		//transform.rotation = new Quaternion (0, transform.rotation.y, 0, 0);
-		//rbody.velocity = Vector3.zero;
-		//transform.position = prevPos;
-		//transform.rotation = prevRot;
-	}
-
+		
 	void Fire(){
 		if (selectedWeapon != null && cooldown <= 0) {
 			Debug.Log ("Calling Fire");

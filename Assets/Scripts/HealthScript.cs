@@ -7,11 +7,10 @@ public class HealthScript : MonoBehaviour {
 	bool dead = false;
 	private Animator anim;
 	private GUIStyle labelStyle;
-
+	private Rigidbody rbody;
 	void Start(){
 		anim = GetComponent<Animator> ();
-		Debug.Log("animator null");
-
+		rbody = GetComponent<Rigidbody> ();
 		labelStyle = new GUIStyle();
 		labelStyle.fontSize = 18;
 		labelStyle.normal.textColor = new Color(0.2F, 0.6F, 1.0F, 1.0F);
@@ -54,6 +53,8 @@ public class HealthScript : MonoBehaviour {
 			Globals.player.GetComponent<HealthScript>().AddScore(Globals.rangeScore);
 			Debug.Log("bullet damage");
 			ApplyDamage (Globals.bulletDamage);
+			rbody.velocity = Vector3.zero;
+			rbody.velocity = Vector3.zero;
 			Destroy (other.gameObject);
 		} 
 	}
@@ -61,9 +62,9 @@ public class HealthScript : MonoBehaviour {
 	void OnGUI() {
 		if (this.gameObject.tag == "Player") {
 			GUI.Label(new Rect(10, 10, 100, 20), "Score: " + score.ToString(), labelStyle);
-			GUI.Label(new Rect(10, 40, 100, 20), "Points: " + healthPoints.ToString(), labelStyle);
-			Debug.Log ("Score: " + score);
-			Debug.Log ("Health: " + healthPoints);		
+			GUI.Label(new Rect(10, 40, 100, 20), "Health: " + healthPoints.ToString(), labelStyle);
+			//Debug.Log ("Score: " + score);
+			//Debug.Log ("Health: " + healthPoints);		
 		}
 	}
 }

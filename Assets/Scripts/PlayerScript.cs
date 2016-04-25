@@ -11,8 +11,6 @@ public class PlayerScript : MonoBehaviour {
 	public float cooldownTime = 100f;
 	private float cooldown;
 	public GameObject selectedWeapon = null;
-	private Vector3 prevPos;
-	private Quaternion prevRot;
 
 	// Use this for initialization
 	void Start () {
@@ -44,9 +42,6 @@ public class PlayerScript : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision other){
-		prevPos = transform.position;
-		prevRot = transform.rotation;
-		//gameObject.transform.rotation = new Quaternion (0, gameObject.transform.rotation.y, 0, 0);
 		if(other.gameObject.CompareTag("weapon")){
 			if (selectedWeapon != null) {
 				selectedWeapon.transform.localPosition = new Vector3 (2f, 0f, 1f);
@@ -59,13 +54,6 @@ public class PlayerScript : MonoBehaviour {
 			selectedWeapon.transform.localPosition = new Vector3(0.5f, 0, 0);
 			selectedWeapon.transform.localScale = new Vector3 (0.3f, 0.3f, 0.3f);
 		}
-	}
-
-	void OnCollisionExit(Collision other){
-		//transform.rotation = new Quaternion (0, transform.rotation.y, 0, 0);
-		//rbody.velocity = Vector3.zero;
-		//transform.rotation = prevRot;
-		//transform.position = prevPos;
 	}
 
 	void Fire(){
