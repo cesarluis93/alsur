@@ -5,6 +5,7 @@ public class EnemyScript : MonoBehaviour {
 	public Rigidbody rbody;
 	private float inputH;
 	private float inputV;
+	public float attackRange;
 	public float velocity = 3f;
 	public float turnVelocity = 5f;
 	public float cooldownTime = 100f;
@@ -26,26 +27,39 @@ public class EnemyScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		cooldown -= 1;
-		Fire ();
 		MovePlayer();
+		if (inRange (attackRange)) {
+			Fire ();
+		} 
 	}
 
+	bool inRange(float range){
+		float distance = Vector3.Distance (Globals.player.transform.position,transform.position);
+		if (distance <= range) {
+			return true;
+		} 
+		else {
+			return false;
+		}
+
+	}
 	void MovePlayer() {
 		Vector3 dir = Globals.player.transform.position - transform.position;
-    	dir = transform.InverseTransformDirection(dir);
-    	float angle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
+    	//dir = transform.InverseTransformDirection(dir);
+    	//float angle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
+		Quaternion rotation = Quaternion.LookRotation (dir);
     	//angle += transform.rotation.y - 90f;
+		transform.rotation=rotation;
     	// Normalize
-    	Debug.Log(angle);
-    	angle /= 180f;
-    	Move(angle, 0.8f);
+		Move(rotation.y, 0.8f);
 	}
 
 	void Move(float h, float v){
-		anim.SetFloat ("inputV", v);
 		float moveZ = v * velocity * Time.deltaTime;
-		transform.Rotate (0, h * turnVelocity, 0);
-		transform.position += transform.forward * Time.deltaTime * velocity * v;
+		if (!inRange (attackRange)) {
+			anim.SetFloat ("inputV", v);
+			transform.position += transform.forward * Time.deltaTime * velocity * v;	
+		}
 	}
 
 	void OnCollisionEnter(Collision other){
@@ -68,9 +82,9 @@ public class EnemyScript : MonoBehaviour {
 
 	void OnCollisionExit(Collision other){
 		//transform.rotation = new Quaternion (0, transform.rotation.y, 0, 0);
-		rbody.velocity = Vector3.zero;
-		transform.position = prevPos;
-		transform.rotation = prevRot;
+		//rbody.velocity = Vector3.zero;
+		//transform.position = prevPos;
+		//transform.rotation = prevRot;
 	}
 
 	void Fire(){

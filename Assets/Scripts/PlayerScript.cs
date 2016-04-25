@@ -62,10 +62,10 @@ public class PlayerScript : MonoBehaviour {
 	}
 
 	void OnCollisionExit(Collision other){
-		transform.rotation = new Quaternion (0, transform.rotation.y, 0, 0);
-		rbody.velocity = Vector3.zero;
-		transform.rotation = prevRot;
-		transform.position = prevPos;
+		//transform.rotation = new Quaternion (0, transform.rotation.y, 0, 0);
+		//rbody.velocity = Vector3.zero;
+		//transform.rotation = prevRot;
+		//transform.position = prevPos;
 	}
 
 	void Fire(){
