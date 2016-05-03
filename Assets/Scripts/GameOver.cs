@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using System.IO;
 public class GameOver : MonoBehaviour {
 
 	public Texture gameOverTexture;
@@ -8,9 +8,13 @@ public class GameOver : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		byte[] fileData = System.IO.File.ReadAllBytes("Assets/Images/game_over.jpg");
+		#if UNITY_WEBPLAYER
+		print("Not Going To Read That File!");
+		#else
+		byte[] fileData = File.ReadAllBytes ("Assets/Images/game_over.jpg");
 		texture = new Texture2D(1024, 768);
 		texture.LoadImage(fileData); 
+		#endif
 	}
 	
 	// Update is called once per frame
