@@ -1,18 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.IO;
 
 public class MainMenu : MonoBehaviour {
 
 
 	public Texture mainMenuTexture;
 	Texture2D texture = null;
-	public TextAsset imageAsset;
 
 	// Use this for initialization
 	void Start () {
 		#if UNITY_WEBPLAYER
-		texture = new Texture2D(1024, 768);
-		texture.LoadImage(imageAsset.bytes); 
 		print("Not Going To Read That File!");
 		#else
 		byte[] fileData = File.ReadAllBytes ("Assets/Images/main_menu.jpg");
@@ -31,7 +29,7 @@ public class MainMenu : MonoBehaviour {
 
 		// New Game
 		if (GUI.Button(
-			new Rect(Screen.width / 2, Screen.height / 2 + 40, 150, 25),
+			new Rect(Screen.width / 2 - 75, Screen.height / 2 + 40, 150, 25),
 			"New Game"
 		)
 		) {
@@ -41,7 +39,7 @@ public class MainMenu : MonoBehaviour {
 
 		// Stage Selection
 		if (GUI.Button(
-			new Rect(Screen.width / 2, Screen.height /2 + 70, 150, 25),
+			new Rect(Screen.width / 2 - 75, Screen.height /2 + 70, 150, 25),
 			"Stage Selection"
 		)
 		)  {
@@ -50,7 +48,7 @@ public class MainMenu : MonoBehaviour {
 
 		// Quit
 		if (GUI.Button(
-			new Rect(Screen.width / 2, Screen.height /2 + 100, 150, 25),
+			new Rect(Screen.width / 2 - 75, Screen.height /2 + 100, 150, 25),
 			"Quit"
 		)
 		)  {

@@ -39,7 +39,7 @@ public class GunScript : MonoBehaviour {
 
 		//Basic Clean Up, set the Bullets to self destruct after 10 Seconds, I am being VERY generous here, normally 3 seconds is plenty.
 		Temporary_Bullet_Handler.tag = this.gameObject.tag;
-		if (gameobject.tag == "Player") {
+		if (gameobject.tag == "Player" || gameobject.tag == "fTurret") {
 			Temporary_Bullet_Handler.tag = "pBullet";
 		} 
 		else {

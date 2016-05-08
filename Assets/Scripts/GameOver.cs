@@ -28,7 +28,7 @@ public class GameOver : MonoBehaviour {
 
 		// Try again
 		if (GUI.Button(
-				new Rect(Screen.width / 2, Screen.height / 2 + 40, 150, 25),
+			new Rect(Screen.width / 2 - 75, Screen.height / 2 + 40, 150, 25),
 				"Try again"
 			)
 		) {
@@ -37,7 +37,7 @@ public class GameOver : MonoBehaviour {
 
 		// Quit
 		if (GUI.Button(
-			new Rect(Screen.width / 2, Screen.height /2 + 70, 150, 25),
+			new Rect(Screen.width / 2 - 75, Screen.height /2 + 70, 150, 25),
 			"Quit"
 			)
 		)  {
