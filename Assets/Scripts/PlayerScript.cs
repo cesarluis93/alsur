@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityStandardAssets.CrossPlatformInput;
+
 public class PlayerScript : MonoBehaviour {
 	public Animator anim;
 	public Rigidbody rbody;
@@ -11,6 +12,9 @@ public class PlayerScript : MonoBehaviour {
 	public float cooldownTime = 100f;
 	private float cooldown;
 	public GameObject selectedWeapon = null;
+	private GameObject selectedItem;
+	public float itemTime;
+	private bool grabItem;
 
 	// Use this for initialization
 	void Start () {
@@ -20,6 +24,9 @@ public class PlayerScript : MonoBehaviour {
 		Globals.player = this.gameObject;
 		anim = GetComponent<Animator> ();
 		rbody = GetComponent<Rigidbody> ();
+		selectedItem = null;
+		grabItem = false;
+		itemTime = 100f;
 	}
 	
 	// Update is called once per frame
@@ -28,8 +35,14 @@ public class PlayerScript : MonoBehaviour {
 		inputH = CrossPlatformInputManager.GetAxis ("Horizontal");
 		inputV = CrossPlatformInputManager.GetAxis ("Vertical");
 		Move (inputH, inputV);
-		if(CrossPlatformInputManager.GetButton("Fire1")){
+		if (CrossPlatformInputManager.GetButton ("Fire1")) {
 			Fire ();
+		}
+		else if (grabItem && selectedItem != null && CrossPlatformInputManager.GetButton ("Jump")) {
+			selectedItem = Instantiate (selectedItem, this.transform.position, this.transform.rotation) as GameObject;
+			selectedItem.SetActive (true);
+			Destroy (selectedItem, itemTime);
+			grabItem = false;
 		}
 	}
 
@@ -42,7 +55,7 @@ public class PlayerScript : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision other){
-		if(other.gameObject.CompareTag("weapon")){
+		if (other.gameObject.CompareTag ("weapon")) {
 			if (selectedWeapon != null) {
 				selectedWeapon.transform.localPosition = new Vector3 (2f, 0f, 1f);
 				selectedWeapon.transform.parent = null;
@@ -51,8 +64,17 @@ public class PlayerScript : MonoBehaviour {
 			Debug.Log ("Picked up");
 			selectedWeapon = other.gameObject;
 			selectedWeapon.transform.parent = this.transform;
-			selectedWeapon.transform.localPosition = new Vector3(0.5f, 0, 0);
+			selectedWeapon.transform.localPosition = new Vector3 (0.5f, 0, 0);
 			selectedWeapon.transform.localScale = new Vector3 (0.3f, 0.3f, 0.3f);
+		}
+		else if (other.gameObject.CompareTag ("item")) {
+			if (selectedItem != null) {
+				DestroyObject (selectedItem);
+			}
+			PutItem linkToScript = (PutItem) other.gameObject.GetComponent("PutItem");
+			selectedItem = linkToScript.getItem ();
+			grabItem = true;
+			Destroy (other.gameObject);
 		}
 	}
 
