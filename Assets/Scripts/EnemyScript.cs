@@ -24,9 +24,10 @@ public class EnemyScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Globals.player == null) {
+		if (Globals.player == null || Globals.paused) {
 			return;
 		}
+
 		cooldown -= 1;
 		RotateToPlayer();
 		if (inRange (attackRange)) {

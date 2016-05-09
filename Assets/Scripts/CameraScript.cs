@@ -17,6 +17,14 @@ public class CameraScript : MonoBehaviour {
 			Application.LoadLevel("GameOver");
 			return;
 		}
+		if (Input.GetKeyDown("p")) {
+			Globals.paused = Globals.paused ? false : true;
+		}
+
+		if (Globals.paused) {
+			return;
+		}
+
 		move(player.transform.position.x, transform.position.y, player.transform.position.z);
 	}
 

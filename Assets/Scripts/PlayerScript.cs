@@ -15,6 +15,7 @@ public class PlayerScript : MonoBehaviour {
 	private GameObject selectedItem;
 	public float itemTime;
 	private bool grabItem;
+	private string pauseButtonText = "Pause";
 
 	// Use this for initialization
 	void Start () {
@@ -31,6 +32,10 @@ public class PlayerScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (Globals.paused) {
+			return;
+		}
+
 		cooldown -= 1;
 		inputH = CrossPlatformInputManager.GetAxis ("Horizontal");
 		inputV = CrossPlatformInputManager.GetAxis ("Vertical");
@@ -83,6 +88,14 @@ public class PlayerScript : MonoBehaviour {
 			Debug.Log ("Calling Fire");
 			selectedWeapon.SendMessage("Fire", this.gameObject);
 			cooldown = cooldownTime;
+		}
+	}
+
+	void OnGUI() {
+		// Pause button
+		if (GUI.Button(new Rect(Screen.width - 100, 20, 80, 25), pauseButtonText)) {
+			pauseButtonText = pauseButtonText.Equals ("Pause") ? "Resume" : "Pause";
+			Globals.paused = Globals.paused ? false : true;
 		}
 	}
 }
