@@ -27,7 +27,7 @@ public class PlayerScript : MonoBehaviour {
 		rbody = GetComponent<Rigidbody> ();
 		selectedItem = null;
 		grabItem = false;
-		itemTime = 30f;
+		itemTime = 15f;
 	}
 	
 	// Update is called once per frame

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class TurretAI : MonoBehaviour {
 	public GameObject gun;
 	private float cooldown;
-	public float cooldownTime = 70f;
+	public float cooldownTime = 7f;
 
     public enum AiStates{NEAREST, FURTHEST};
  
