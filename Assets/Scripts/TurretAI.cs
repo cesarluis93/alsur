@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class TurretAI : MonoBehaviour {
 	public GameObject gun;
 	private float cooldown;
-	public float cooldownTime = 80f;
+	public float cooldownTime = 70f;
 
     public enum AiStates{NEAREST, FURTHEST};
  
@@ -26,6 +26,11 @@ public class TurretAI : MonoBehaviour {
     void Update () {
         if(!m_tracker || !m_range)
             return;
+
+		if (Globals.paused) {
+			return;
+		}
+
 		cooldown -= 1;
         switch(aiState)
         {
@@ -47,13 +52,15 @@ public class TurretAI : MonoBehaviour {
  
         for(int i = 0; i < validTargets.Count; i++)
         {
-            float dist = Vector3.Distance(transform.position, validTargets[i].transform.position);
- 
-            if(!curTarget || dist < closestDist)
-            {
-                curTarget = validTargets[i];
-                closestDist = dist;
-            }
+			if (validTargets [i] != null) {
+				float dist = Vector3.Distance(transform.position, validTargets[i].transform.position);
+
+				if(!curTarget || dist < closestDist)
+				{
+					curTarget = validTargets[i];
+					closestDist = dist;
+				}
+			}
         }
  
         m_tracker.SetTarget(curTarget);
@@ -72,13 +79,14 @@ public class TurretAI : MonoBehaviour {
      
         for(int i = 0; i < validTargets.Count; i++)
         {
-            float dist = Vector3.Distance(transform.position, validTargets[i].transform.position);
-         
-            if(!curTarget || dist > furthestDist)
-            {
-                curTarget = validTargets[i];
-                furthestDist = dist;
-            }
+			if (validTargets [i] != null) {
+				float dist = Vector3.Distance (transform.position, validTargets [i].transform.position);
+	         
+				if (!curTarget || dist > furthestDist) {
+					curTarget = validTargets [i];
+					furthestDist = dist;
+				}
+			}
         }
      
         m_tracker.SetTarget(curTarget);

@@ -7,6 +7,10 @@ public class CarScript : MonoBehaviour {
 	private Vector3 result;
 
 	void Update (){
+		if (Globals.paused) {
+			return;
+		}
+
 		if(distance>0){
 			distance-=activate ();
 		}
