@@ -29,48 +29,52 @@ public class GunScript : MonoBehaviour {
 	}
 
 	void OnPauseGame(){
-		if (Temporary_Bullet_Handler != null) {
-			eBullets =  GameObject.FindGameObjectsWithTag("eBullet");
-			eVelocities = new Vector3[eBullets.Length];
-			StopBullet (eBullets, "enemy");
-			pBullets =  GameObject.FindGameObjectsWithTag("pBullet");
-			pVelocities = new Vector3[pBullets.Length];
-			StopBullet (pBullets, "player");
-		}
+		eBullets =  GameObject.FindGameObjectsWithTag("eBullet");
+		eVelocities = new Vector3[eBullets.Length];
+		StopBullet (eBullets, "enemy");
+		pBullets =  GameObject.FindGameObjectsWithTag("pBullet");
+		pVelocities = new Vector3[pBullets.Length];
+		StopBullet (pBullets, "player");
 	}
 
 	void OnResumeGame(){
-		GameObject[] eBullets =  GameObject.FindGameObjectsWithTag("eBullet");
-		WakeBullet (eBullets, "enemy");
-		GameObject[] pBullets =  GameObject.FindGameObjectsWithTag("pBullet");
-		WakeBullet (pBullets, "player");
+		if (eBullets.Length > 0) {
+			WakeBullet (eBullets, "enemy");
+		}
+		if (pBullets.Length > 0) {
+			WakeBullet (pBullets, "player");
+		}
 	}
 
 	void StopBullet(GameObject[] bullets, string type){
 		for (int i = 0; i < bullets.Length; i++) {
 			GameObject bullet = bullets [i];
-			Vector3 tempVelocity;
-			tempVelocity = bullet.GetComponent<Rigidbody> ().velocity;
-			if (type == "enemy") {
-				eVelocities [i] = tempVelocity;
-			} else if (type == "player") {
-				pVelocities [i] = tempVelocity;
+			if (bullet != null) {
+				Vector3 tempVelocity;
+				tempVelocity = bullet.GetComponent<Rigidbody> ().velocity;
+				if (type == "enemy") {
+					eVelocities [i] = tempVelocity;
+				} else if (type == "player") {
+					pVelocities [i] = tempVelocity;
+				}
+				bullet.GetComponent<Rigidbody> ().isKinematic = true;
 			}
-			bullet.GetComponent<Rigidbody> ().isKinematic = true;
 		}
 	}
 
 	void WakeBullet(GameObject[] bullets, string type){
 		for (int i = 0; i < bullets.Length; i++) {
 			GameObject bullet = bullets [i];
-			bullet.GetComponent<Rigidbody> ().isKinematic = false;
-			Vector3 tempVelocity = new Vector3();
-			if (type == "enemy") {
-				tempVelocity = eVelocities [i];
-			} else if (type == "player") {
-				tempVelocity = pVelocities [i];
+			if (bullet != null) {
+				bullet.GetComponent<Rigidbody> ().isKinematic = false;
+				Vector3 tempVelocity = new Vector3();
+				if (type == "enemy") {
+					tempVelocity = eVelocities [i];
+				} else if (type == "player") {
+					tempVelocity = pVelocities [i];
+				}
+				bullet.GetComponent<Rigidbody>().AddForce( tempVelocity, ForceMode.VelocityChange );
 			}
-			bullet.GetComponent<Rigidbody>().AddForce( tempVelocity, ForceMode.VelocityChange );
 		}
 	}
 
