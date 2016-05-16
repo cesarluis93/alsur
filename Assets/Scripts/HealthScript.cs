@@ -18,25 +18,25 @@ public class HealthScript : MonoBehaviour {
 
 	bool ApplyDamage(float damage){
 		healthPoints -= damage;
-
+		Debug.Log ("Health Point: "+healthPoints);
 		if (healthPoints <= 0) {
 			if (!dead) {
-				anim.Play ("LOSE", -1, 0f);
+				anim.Play ("die1", -1, 0f);
 				Destroy (this.gameObject, 2f);
 				dead = true;
 			}
-			return false;
 		} 
 		else {
-			anim.Play ("DAMAGED", -1, 0f);
+			anim.Play ("damage", -1, 0f);
 			dead = false;
 		}
 
-		return true;
+		return dead;
 	}
 
 	void AddScore(float points){
 		score += points;
+		Debug.Log (gameObject.tag+":"+score);
 	}
 
 	void OnCollisionEnter(Collision other) {
@@ -53,12 +53,14 @@ public class HealthScript : MonoBehaviour {
 			if (this.gameObject.tag != "Player") {
 				Globals.player.GetComponent<HealthScript>().AddScore(Globals.rangeScore);
 			}
-			Debug.Log("bullet damage");
-			ApplyDamage (Globals.bulletDamage);
+			Debug.Log("bullet damage "+Globals.bulletDamage);
+			Debug.Log("resultado "+ApplyDamage (Globals.bulletDamage));
 			rbody.velocity = Vector3.zero;
 			rbody.velocity = Vector3.zero;
-			Destroy (other.gameObject);
-		} 
+		}
+		if(other.gameObject.tag.Contains("Bullet")){
+			Destroy (other.gameObject);	
+		}
 	}
 
 	void OnGUI() {

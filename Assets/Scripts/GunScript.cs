@@ -79,19 +79,19 @@ public class GunScript : MonoBehaviour {
 	}
 
 	void Fire(GameObject gameobject){
-
+		Animator anim = gameobject.GetComponent<Animator> ();
 		Vector3 emitter = new Vector3 (
 			gameobject.transform.position.x,
-			gameobject.transform.position.y + 1,
+			gameobject.transform.position.y + 0.5f,
 			gameobject.transform.position.z
 		);
-
+		Quaternion rotation = new Quaternion (gameobject.transform.rotation.x, gameobject.transform.rotation.y, gameobject.transform.rotation.z, gameobject.transform.rotation.w);
 		Temporary_Bullet_Handler = Instantiate(
 			bullet,
 			emitter,
-			gameobject.transform.rotation
+			rotation
 		) as GameObject;
-
+		Temporary_Bullet_Handler.transform.rotation=rotation;
 		Physics.IgnoreCollision (
 			gameobject.GetComponent<Collider>(),
 			Temporary_Bullet_Handler.GetComponent<Collider>(),
@@ -99,17 +99,21 @@ public class GunScript : MonoBehaviour {
 		);
 		//Sometimes bullets may appear rotated incorrectly due to the way its pivot was set from the original modeling package.
 		//This is EASILY corrected here, you might have to rotate it from a different axis and or angle based on your particular mesh.
-		//Temporary_Bullet_Handler.transform.Rotate(Vector3.left * 90);
+		Temporary_Bullet_Handler.transform.Rotate(Vector3.left * 270);
 
 		//Retrieve the Rigidbody component from the instantiated Bullet and control it.
 		Rigidbody Temporary_RigidBody;
 		Temporary_RigidBody = Temporary_Bullet_Handler.GetComponent<Rigidbody>();
 
 		//Tell the bullet to be "pushed" forward by an amount set by Bullet_Forward_Force.
-		Temporary_RigidBody.AddForce(Temporary_Bullet_Handler.transform.forward * bulletForce);
+		Temporary_RigidBody.AddForce((	Temporary_Bullet_Handler.transform.up) * bulletForce);
 
 		//Basic Clean Up, set the Bullets to self destruct after 10 Seconds, I am being VERY generous here, normally 3 seconds is plenty.
+
 		Temporary_Bullet_Handler.tag = this.gameObject.tag;
+		if(gameobject.tag!="fTurret"){
+			anim.Play ("atk_bow",-1,0f);
+		}
 		if (gameobject.tag == "Player" || gameobject.tag == "fTurret") {
 			Temporary_Bullet_Handler.tag = "pBullet";
 		} 

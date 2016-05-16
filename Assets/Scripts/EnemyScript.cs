@@ -10,8 +10,9 @@ public class EnemyScript : MonoBehaviour {
 	public float turnVelocity = 5f;
 	public float cooldownTime = 100f;
 	private float cooldown;
-	public GameObject selectedWeapon = null;
-
+	public GameObject weapon;
+	public GameObject selectedWeapon;
+	public GameObject target;
 	// Use this for initialization
 	void Start () {
 		if(gameObject.CompareTag("Player")){
@@ -20,6 +21,12 @@ public class EnemyScript : MonoBehaviour {
 		Globals.player = this.gameObject;
 		anim = GetComponent<Animator> ();
 		rbody = GetComponent<Rigidbody> ();
+		selectedWeapon = Instantiate(
+			weapon,
+			Vector3.zero,
+			Quaternion.identity
+		) as GameObject;
+		selectedWeapon.transform.localScale = Vector3.zero;
 	}
 	
 	// Update is called once per frame
@@ -40,7 +47,7 @@ public class EnemyScript : MonoBehaviour {
 	}
 
 	bool inRange(float range) {
-		if (Globals.player == null) {
+		if (target == null) {
 			return false;
 		}
 		float distance = Vector3.Distance (Globals.player.transform.position,transform.position);
@@ -54,19 +61,20 @@ public class EnemyScript : MonoBehaviour {
 	}
 
 	void RotateToPlayer(){
-		if (Globals.player == null) {
+		if (target == null) {
 			return;
 		}
-		Vector3 dir = Globals.player.transform.position - transform.position;
+		Vector3 dir = target.transform.position - transform.position;
 		Quaternion rotation = Quaternion.LookRotation (dir);
 		transform.rotation=rotation;
 	}
 
 	void Move(float velocity){
-		anim.SetFloat ("inputV", 0.8f);
+		anim.SetFloat ("Speed", 0.8f);
 		transform.position += transform.forward * Time.deltaTime * velocity;	
 	}
 
+	/*
 	void OnCollisionEnter(Collision other){
 		if(other.gameObject.CompareTag("weapon")){
 			//gameObject.transform.rotation = new Quaternion (0, gameObject.transform.rotation.y, 0, 0);
@@ -82,6 +90,8 @@ public class EnemyScript : MonoBehaviour {
 			selectedWeapon.transform.localScale = new Vector3 (0.3f, 0.3f, 0.3f);
 		}
 	}
+
+	*/
 		
 	void Fire(){
 		if (selectedWeapon != null && cooldown <= 0) {

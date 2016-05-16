@@ -38,13 +38,13 @@ public class ThirdPersonCamera : MonoBehaviour
 	void FixedUpdate ()	// このカメラ切り替えはFixedUpdate()内でないと正常に動かない
 	{
 		
-		if(Input.GetButton("Fire1"))	// left Ctlr
+		if(Input.GetKey(KeyCode.LeftControl))	// left Ctlr
 		{	
 			// Change Front Camera
 			setCameraPositionFrontView();
 		}
 		
-		else if(Input.GetButton("Fire2"))	//Alt
+		else if(Input.GetKey(KeyCode.LeftAlt))	//Alt
 		{	
 			// Change Jump Camera
 			setCameraPositionJumpView();

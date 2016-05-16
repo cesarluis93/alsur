@@ -9,11 +9,16 @@ public class MeleeAttackScript : MonoBehaviour {
 	void Fire(GameObject gameobject){
 		Animator anim = gameobject.GetComponent<Animator> ();
 		Debug.Log ("fired");
-		anim.Play ("KICK", -1, 0f);
-		if(Physics.Raycast(gameobject.transform.position, gameobject.transform.forward, out hit, attackRange)){
+		anim.Play ("ark1", -1, 0f);
+		Vector3 emitter = new Vector3 (
+			gameobject.transform.position.x,
+			gameobject.transform.position.y + 0.5f,
+			gameobject.transform.position.z
+		);
+		if(Physics.Raycast(emitter, gameobject.transform.forward, out hit, attackRange)){
 			Debug.Log ("hit");
 			hit.transform.SendMessage ("ApplyDamage", Globals.meleeDamage);
-			hit.transform.SendMessage ("AddScore", Globals.meleeScore);
+			gameobject.SendMessage ("AddScore", Globals.meleeScore);
 		}
 	}
 }
