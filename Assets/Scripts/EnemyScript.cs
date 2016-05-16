@@ -13,12 +13,11 @@ public class EnemyScript : MonoBehaviour {
 	public GameObject weapon;
 	public GameObject selectedWeapon;
 	public GameObject target;
+	public GameObject objective;
+
 	// Use this for initialization
 	void Start () {
-		if(gameObject.CompareTag("Player")){
-			Globals.player = gameObject;
-		}
-		Globals.player = this.gameObject;
+		pickObjective ();
 		anim = GetComponent<Animator> ();
 		rbody = GetComponent<Rigidbody> ();
 		selectedWeapon = Instantiate(
@@ -35,6 +34,11 @@ public class EnemyScript : MonoBehaviour {
 			return;
 		}
 
+		if (objective == null) {
+			pickObjective ();
+			return;
+		}
+			
 		cooldown -= 1;
 		RotateToPlayer();
 		if (inRange (attackRange)) {
@@ -46,11 +50,35 @@ public class EnemyScript : MonoBehaviour {
 		}
 	}
 
+	public void pickObjective(){
+		if (Globals.player == null || Globals.stageBase == null) {
+			/*
+			Debug.Log ("No pick");
+			if (Globals.player == null) {
+				Debug.Log ("Player null");
+			}
+			if (Globals.stageBase == null) {
+				Debug.Log ("Base null");
+			}
+			*/
+			return;
+		}
+		int which = Random.Range (0, 2);
+		if (which == 0) {
+			objective = Globals.player;
+			Debug.Log ("Pick player");
+		} else {
+			objective = Globals.stageBase;
+			Debug.Log ("Pick base");
+		}
+	}
+
 	bool inRange(float range) {
-		if (target == null) {
+
+		if (objective == null) {
 			return false;
 		}
-		float distance = Vector3.Distance (Globals.player.transform.position,transform.position);
+		float distance = Vector3.Distance (objective.transform.position,transform.position);
 		if (distance <= range) {
 			return true;
 		} 
@@ -61,10 +89,10 @@ public class EnemyScript : MonoBehaviour {
 	}
 
 	void RotateToPlayer(){
-		if (target == null) {
+		if (objective == null) {
 			return;
 		}
-		Vector3 dir = target.transform.position - transform.position;
+		Vector3 dir = objective.transform.position - transform.position;
 		Quaternion rotation = Quaternion.LookRotation (dir);
 		transform.rotation=rotation;
 	}
@@ -73,25 +101,6 @@ public class EnemyScript : MonoBehaviour {
 		anim.SetFloat ("Speed", 0.8f);
 		transform.position += transform.forward * Time.deltaTime * velocity;	
 	}
-
-	/*
-	void OnCollisionEnter(Collision other){
-		if(other.gameObject.CompareTag("weapon")){
-			//gameObject.transform.rotation = new Quaternion (0, gameObject.transform.rotation.y, 0, 0);
-			if (selectedWeapon != null) {
-				selectedWeapon.transform.localPosition = new Vector3 (2f, 0f, 1f);
-				selectedWeapon.transform.parent = null;
-				selectedWeapon.transform.localScale = new Vector3 (1f, 1f, 1f);
-			}
-			Debug.Log ("Picked up");
-			selectedWeapon = other.gameObject;
-			selectedWeapon.transform.parent = this.transform;
-			selectedWeapon.transform.localPosition = new Vector3(0.5f, 0, 0);
-			selectedWeapon.transform.localScale = new Vector3 (0.3f, 0.3f, 0.3f);
-		}
-	}
-
-	*/
 		
 	void Fire(){
 		if (selectedWeapon != null && cooldown <= 0) {

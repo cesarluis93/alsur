@@ -3,6 +3,7 @@ using System.Collections;
 
 public class CameraScript : MonoBehaviour {
 	public GameObject player;
+	public GameObject stageBase;
 	Vector3 camPos;
 
 	// Use this for initialization
@@ -13,7 +14,7 @@ public class CameraScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (player == null) {
+		if (player == null || stageBase == null) {
 			Application.LoadLevel("GameOver");
 			return;
 		}
