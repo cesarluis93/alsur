@@ -42,7 +42,7 @@ public class EnemyScript : MonoBehaviour {
 		cooldown -= 1;
 		RotateToPlayer();
 		if (inRange (attackRange)) {
-			anim.SetFloat ("inputV", 0);
+			anim.SetFloat ("Speed", 0);
 			Fire ();
 		} 
 		else {
@@ -95,6 +95,7 @@ public class EnemyScript : MonoBehaviour {
 		Vector3 dir = objective.transform.position - transform.position;
 		Quaternion rotation = Quaternion.LookRotation (dir);
 		transform.rotation=rotation;
+		anim.SetFloat ("Direction",rotation.y);
 	}
 
 	void Move(float velocity){

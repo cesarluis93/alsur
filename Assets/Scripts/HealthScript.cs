@@ -5,11 +5,13 @@ public class HealthScript : MonoBehaviour {
 	public float healthPoints = 100;
 	public float score = 0;
 	bool dead = false;
-	private Animator anim;
+	private Animator anim=null;
 	private GUIStyle labelStyle;
 	private Rigidbody rbody;
 	void Start(){
-		anim = GetComponent<Animator> ();
+		if(gameObject.tag!="stageBase"){
+			anim = GetComponent<Animator> ();
+		}
 		rbody = GetComponent<Rigidbody> ();
 		labelStyle = new GUIStyle();
 		labelStyle.fontSize = 18;
@@ -21,13 +23,17 @@ public class HealthScript : MonoBehaviour {
 		Debug.Log ("Health Point: "+healthPoints);
 		if (healthPoints <= 0) {
 			if (!dead) {
-				anim.Play ("die1", -1, 0f);
+				if (anim != null) {
+					anim.Play ("die1", -1, 0f);
+				}
 				Destroy (this.gameObject, 2f);
 				dead = true;
 			}
 		} 
 		else {
-			anim.Play ("damage", -1, 0f);
+			if (anim != null) {
+				anim.Play ("damage", -1, 0f);	
+			}
 			dead = false;
 		}
 
