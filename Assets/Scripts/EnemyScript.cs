@@ -22,7 +22,7 @@ public class EnemyScript : MonoBehaviour {
 		rbody = GetComponent<Rigidbody> ();
 		selectedWeapon = Instantiate(
 			weapon,
-			Vector3.zero,
+			this.transform.position,
 			Quaternion.identity
 		) as GameObject;
 		selectedWeapon.transform.localScale = Vector3.zero;
