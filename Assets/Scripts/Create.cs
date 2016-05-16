@@ -21,6 +21,7 @@ public class Create : MonoBehaviour {
 				GameObject choosenEnemy = enemies [rIndex];
 				Vector3 rPosition = new Vector3 (Random.Range (minX, maxX), choosenEnemy.transform.position.y, Random.Range (minZ, maxZ));
 				GameObject insEnemy = Instantiate (choosenEnemy, rPosition, choosenEnemy.transform.rotation) as GameObject;
+				insEnemy.SetActive (true);
 			}
 		}
 	}
