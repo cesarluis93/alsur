@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class MeleeAttackScript : MonoBehaviour {
-	public float attackRange = 10f;
+	public float attackRange = 20f;
 	private Vector3 forward;
 	RaycastHit hit;
 

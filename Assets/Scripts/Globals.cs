@@ -8,6 +8,7 @@ public class Globals : MonoBehaviour {
 	public static float rangeScore = 20f;
 	public static float carDamage = 100f;
 	public static GameObject player;
+	public static GameObject stageBase;
 
 	public static bool paused = false;
 }

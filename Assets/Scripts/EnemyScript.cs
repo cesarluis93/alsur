@@ -11,13 +11,13 @@ public class EnemyScript : MonoBehaviour {
 	public float cooldownTime = 100f;
 	private float cooldown;
 	public GameObject selectedWeapon = null;
+	public GameObject objective;
+
+
 
 	// Use this for initialization
 	void Start () {
-		if(gameObject.CompareTag("Player")){
-			Globals.player = gameObject;
-		}
-		Globals.player = this.gameObject;
+		pickObjective ();
 		anim = GetComponent<Animator> ();
 		rbody = GetComponent<Rigidbody> ();
 	}
@@ -28,6 +28,11 @@ public class EnemyScript : MonoBehaviour {
 			return;
 		}
 
+		if (objective == null) {
+			pickObjective ();
+			return;
+		}
+			
 		cooldown -= 1;
 		RotateToPlayer();
 		if (inRange (attackRange)) {
@@ -39,11 +44,34 @@ public class EnemyScript : MonoBehaviour {
 		}
 	}
 
+	public void pickObjective(){
+		if (Globals.player == null || Globals.stageBase == null) {
+			/*
+			Debug.Log ("No pick");
+			if (Globals.player == null) {
+				Debug.Log ("Player null");
+			}
+			if (Globals.stageBase == null) {
+				Debug.Log ("Base null");
+			}
+			*/
+			return;
+		}
+		int which = Random.Range (0, 2);
+		if (which == 0) {
+			objective = Globals.player;
+			Debug.Log ("Pick player");
+		} else {
+			objective = Globals.stageBase;
+			Debug.Log ("Pick base");
+		}
+	}
+
 	bool inRange(float range) {
-		if (Globals.player == null) {
+		if (objective == null) {
 			return false;
 		}
-		float distance = Vector3.Distance (Globals.player.transform.position,transform.position);
+		float distance = Vector3.Distance (objective.transform.position,transform.position);
 		if (distance <= range) {
 			return true;
 		} 
@@ -54,10 +82,10 @@ public class EnemyScript : MonoBehaviour {
 	}
 
 	void RotateToPlayer(){
-		if (Globals.player == null) {
+		if (objective == null) {
 			return;
 		}
-		Vector3 dir = Globals.player.transform.position - transform.position;
+		Vector3 dir = objective.transform.position - transform.position;
 		Quaternion rotation = Quaternion.LookRotation (dir);
 		transform.rotation=rotation;
 	}
