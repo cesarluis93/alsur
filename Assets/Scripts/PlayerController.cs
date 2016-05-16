@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
 	private AnimatorStateInfo currentBaseState;			
 	private GameObject cameraObject;	
 	public GameObject selectedWeapon;
-	public GameObject selectedItem;
+	public GameObject selectedItem; 
 
 	static int idle_cState = Animator.StringToHash("Base Layer.Idle_C");
 	static int idle_aState = Animator.StringToHash("Base Layer.Idle_A");
@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
 	public float cooldownTime = 100f;
 	private float cooldown;	
 	private bool grabItem = false;
+	public float itemTime;
 
 	void Start ()
 	{
@@ -70,7 +71,13 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetButtonDown("Fire1")&&selectedWeapon!=null) {
 			Fire ();
 		}
-		
+		if (grabItem && selectedItem != null && Input.GetKeyDown(KeyCode.E)) {
+			Debug.Log ("Item used");
+			selectedItem = Instantiate (selectedItem, this.transform.position, this.transform.rotation) as GameObject;
+			selectedItem.SetActive (true);
+			Destroy (selectedItem, itemTime);
+			grabItem = false;
+		}
 		velocity = new Vector3(0, 0, v);
 		velocity = transform.TransformDirection(velocity);
 		if (v > 0.1) {

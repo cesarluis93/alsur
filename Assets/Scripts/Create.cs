@@ -14,13 +14,19 @@ public class Create : MonoBehaviour {
 	}
 
 	public void createEnemies(List<GameObject> enemies, int cant, float minX, float maxX, float minZ, float maxZ){
-		int cantEnemies = enemies.Count;
+		float cantEnemies = enemies.Count;
+		float max = ((float)cant) / 2;
 		if (cantEnemies > 0) {
-			for (int i = 0; i < cant; i++) {
+			for (int i = 0; i < max; i++) {
 				int rIndex = (int) Random.Range(0f, cantEnemies);
 				GameObject choosenEnemy = enemies [rIndex];
 				Vector3 rPosition = new Vector3 (Random.Range (minX, maxX), choosenEnemy.transform.position.y, Random.Range (minZ, maxZ));
 				GameObject insEnemy = Instantiate (choosenEnemy, rPosition, choosenEnemy.transform.rotation) as GameObject;
+				insEnemy.SetActive (true);
+				rIndex = (int) Random.Range(0f, cantEnemies);
+				choosenEnemy = enemies [rIndex];
+				rPosition = new Vector3 (Random.Range (-minX, -maxX), choosenEnemy.transform.position.y, Random.Range (-minZ, -maxZ));
+				insEnemy = Instantiate (choosenEnemy, rPosition, choosenEnemy.transform.rotation) as GameObject;
 				insEnemy.SetActive (true);
 			}
 		}
