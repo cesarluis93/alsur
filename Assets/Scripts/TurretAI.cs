@@ -20,6 +20,7 @@ public class TurretAI : MonoBehaviour {
         m_tracker =  GetComponent<TrackingSystem>();
         // m_shooter =  GetComponent<ShootingSystem>();
         m_range   =  GetComponent<RangeChecker>();
+		gun = Instantiate (gun) as GameObject;
     }
  
     // Update is called once per frame
