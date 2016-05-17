@@ -34,7 +34,7 @@ public class MainMenu : MonoBehaviour {
 		)
 		) {
 			Debug.Log("hola");
-			Application.LoadLevel("Level 1");
+			Application.LoadLevel("Level 1 - Assets");
 		}
 
 		// Stage Selection
@@ -43,7 +43,7 @@ public class MainMenu : MonoBehaviour {
 			"Stage Selection"
 		)
 		)  {
-			Application.LoadLevel("Level 1");
+			Application.LoadLevel("Level 1 - Assets");
 		}
 
 		// Quit

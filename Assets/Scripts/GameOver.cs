@@ -32,7 +32,7 @@ public class GameOver : MonoBehaviour {
 				"Try again"
 			)
 		) {
-			Application.LoadLevel("Level 1");
+			Application.LoadLevel("Level 1 - Assets");
 		}
 
 		// Quit

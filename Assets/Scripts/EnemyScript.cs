@@ -52,15 +52,6 @@ public class EnemyScript : MonoBehaviour {
 
 	public void pickObjective(){
 		if (Globals.player == null || Globals.stageBase == null) {
-			/*
-			Debug.Log ("No pick");
-			if (Globals.player == null) {
-				Debug.Log ("Player null");
-			}
-			if (Globals.stageBase == null) {
-				Debug.Log ("Base null");
-			}
-			*/
 			return;
 		}
 		int which = Random.Range (0, 2);
