@@ -5,12 +5,28 @@ using System.Collections.Generic;
 public class Create : MonoBehaviour {
 	// To create enemies
 	public List<GameObject> possibleEnemies;
-	public int cantEnemies;
+	public GameObject boss;
 	public float minX, maxX, minZ, maxZ;
-
+	public int waves;
+	public int enemiesPerWave;
+	private int waveCount=1;
 	// Use this for initialization
+	private float time=0;
+	private bool bossa=false;
 	void Start () {
-		createEnemies(possibleEnemies, cantEnemies, minX, maxX, minZ, maxZ);
+		createEnemies(possibleEnemies, enemiesPerWave, minX, maxX, minZ, maxZ);
+	}
+
+	void Update(){
+		time += Time.deltaTime;
+		if (time > 1.0f && waveCount <= waves) {
+			createEnemies (possibleEnemies, enemiesPerWave, minX, maxX, minZ, maxZ);
+			time = 0;
+			waveCount++;
+		} else if (!bossa&&time>10.0f) {
+			bossa = true;
+			createBoss (boss, minX, maxX, minZ, maxZ);
+		}
 	}
 
 	public void createEnemies(List<GameObject> enemies, int cant, float minX, float maxX, float minZ, float maxZ){
@@ -30,5 +46,12 @@ public class Create : MonoBehaviour {
 				insEnemy.SetActive (true);
 			}
 		}
+	}
+
+	public void createBoss(GameObject boss, float minX, float maxX, float minZ, float maxZ){
+		GameObject choosenEnemy = boss;
+		Vector3 rPosition = new Vector3 (Random.Range (minX, maxX), choosenEnemy.transform.position.y, Random.Range (minZ, maxZ));
+		GameObject insEnemy = Instantiate (choosenEnemy, rPosition, choosenEnemy.transform.rotation) as GameObject;
+		insEnemy.SetActive (true);
 	}
 }
