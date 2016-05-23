@@ -27,6 +27,7 @@ public class HealthScript : MonoBehaviour {
 					anim.Play ("die1", -1, 0f);
 				}
 				Destroy (this.gameObject, 2f);
+				Globals.enemiesLeft -= 1;
 				dead = true;
 			}
 		} 
@@ -71,8 +72,9 @@ public class HealthScript : MonoBehaviour {
 
 	void OnGUI() {
 		if (this.gameObject.tag == "Player") {
-			GUI.Label(new Rect(10, 10, 100, 20), "Score: " + score.ToString(), labelStyle);
+			GUI.Label(new Rect(10, 10, 100, 20), "Enemies Left: " + Globals.enemiesLeft.ToString(), labelStyle);
 			GUI.Label(new Rect(10, 40, 100, 20), "Health: " + healthPoints.ToString(), labelStyle);
+			GUI.Label(new Rect(10, 70, 100, 20), "Wave: " + Globals.waveCount.ToString(), labelStyle);
 			//Debug.Log ("Score: " + score);
 			//Debug.Log ("Health: " + healthPoints);		
 		}

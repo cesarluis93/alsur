@@ -85,8 +85,10 @@ public class EnemyScript : MonoBehaviour {
 		}
 		Vector3 dir = objective.transform.position - transform.position;
 		Quaternion rotation = Quaternion.LookRotation (dir);
+		rotation.x = 0;
+		rotation.z = 0;
 		transform.rotation=rotation;
-		anim.SetFloat ("Direction",rotation.y);
+		//anim.SetFloat ("Direction",rotation.y);
 	}
 
 	void Move(float velocity){

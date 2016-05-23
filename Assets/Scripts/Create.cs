@@ -9,24 +9,28 @@ public class Create : MonoBehaviour {
 	public float minX, maxX, minZ, maxZ;
 	public int waves;
 	public int enemiesPerWave;
-	private int waveCount=1;
 	// Use this for initialization
 	private float time=0;
 	private bool bossa=false;
+
 	void Start () {
+		Globals.enemiesLeft = enemiesPerWave;
 		createEnemies(possibleEnemies, enemiesPerWave, minX, maxX, minZ, maxZ);
 	}
 
 	void Update(){
 		time += Time.deltaTime;
-		if (time > 1.0f && waveCount <= waves) {
+		if (Globals.enemiesLeft == 0 && Globals.waveCount <= waves) {
 			createEnemies (possibleEnemies, enemiesPerWave, minX, maxX, minZ, maxZ);
+			Globals.enemiesLeft = enemiesPerWave;
 			time = 0;
-			waveCount++;
-		} else if (!bossa&&time>10.0f) {
+			Globals.waveCount++;
+		} else if (!bossa && Globals.waveCount > waves && Globals.enemiesLeft == 0) {
 			bossa = true;
+			Globals.enemiesLeft++;
 			createBoss (boss, minX, maxX, minZ, maxZ);
 		}
+		
 	}
 
 	public void createEnemies(List<GameObject> enemies, int cant, float minX, float maxX, float minZ, float maxZ){
