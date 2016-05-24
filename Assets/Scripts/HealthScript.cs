@@ -27,7 +27,9 @@ public class HealthScript : MonoBehaviour {
 					anim.Play ("die1", -1, 0f);
 				}
 				Destroy (this.gameObject, 2f);
-				Globals.enemiesLeft -= 1;
+				if (this.gameObject.tag != "Player") {
+					Globals.enemiesLeft -= 1;
+				}
 				dead = true;
 			}
 		} 

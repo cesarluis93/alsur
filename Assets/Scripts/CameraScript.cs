@@ -8,7 +8,8 @@ public class CameraScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (player == null || stageBase == null) {
-			Application.LoadLevel("GameOver");
+			Globals.win = false;
+			Application.LoadLevel("StageEnd");
 			return;
 		}
 		if (Input.GetKeyDown("p")) {

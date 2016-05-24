@@ -25,10 +25,15 @@ public class Create : MonoBehaviour {
 			Globals.enemiesLeft = enemiesPerWave;
 			time = 0;
 			Globals.waveCount++;
-		} else if (!bossa && Globals.waveCount > waves && Globals.enemiesLeft == 0) {
+		} 
+		else if (!bossa && Globals.waveCount > waves && Globals.enemiesLeft == 0) {
 			bossa = true;
 			Globals.enemiesLeft++;
 			createBoss (boss, minX, maxX, minZ, maxZ);
+		}
+		else if (bossa && Globals.waveCount > waves && Globals.enemiesLeft == 0) {
+			bossa = true;
+			Globals.win = true;
 		}
 		
 	}
