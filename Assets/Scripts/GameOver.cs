@@ -13,7 +13,7 @@ public class GameOver : MonoBehaviour {
 		#else
 		byte[] fileData = null;
 		if(Globals.win){
-			if(Globals.level > 0 && Globals < 3) {
+			if(Globals.level > 0 && Globals.level < 3) {
 				fileData = File.ReadAllBytes ("Assets/Images/level"+Globals.level+".jpg");
 			}
 			else{

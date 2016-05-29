@@ -33,7 +33,6 @@ public class MainMenu : MonoBehaviour {
 			"New Game"
 		)
 		) {
-			Debug.Log("hola");
 			Application.LoadLevel("Level 1 - Assets");
 		}
 
