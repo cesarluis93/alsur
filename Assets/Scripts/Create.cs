@@ -17,17 +17,15 @@ public class Create : MonoBehaviour {
 	public string jsonMap;
 	public List<GameObject> floorObjects;
 	public List<GameObject> enviormentObjects;
+	public GameObject boundry;
 
 	void Start () {
 		createMap (jsonMap, floorObjects, enviormentObjects);
-		/*
 		Globals.enemiesLeft = enemiesPerWave;
 		createEnemies(possibleEnemies, enemiesPerWave, minX, maxX, minZ, maxZ);
-		*/
 	}
 
 	void Update(){
-		/*
 		time += Time.deltaTime;
 		if (Globals.enemiesLeft == 0 && Globals.waveCount <= waves) {
 			createEnemies (possibleEnemies, enemiesPerWave, minX, maxX, minZ, maxZ);
@@ -44,7 +42,6 @@ public class Create : MonoBehaviour {
 			bossa = true;
 			Globals.win = true;
 		}
-		*/
 	}
 
 	public void createMap(string mapInfoPath, List<GameObject> floor, List<GameObject> enviorment) {
@@ -121,6 +118,32 @@ public class Create : MonoBehaviour {
 		// Coordinates to start adding to place the floor
 		float startX = -offsetX;
 		float startZ = offsetZ;
+
+		// Set the boudries
+		// Top
+		GameObject topB = Instantiate (
+			boundry, new Vector3(0f, boundry.transform.position.y, offsetZ), boundry.transform.rotation
+		) as GameObject;
+		topB.transform.localScale = new Vector3 (maxWidth, 30f, 1f);
+		topB.SetActive (true);
+		// Right
+		GameObject rightB = Instantiate (
+			boundry, new Vector3(offsetX, boundry.transform.position.y, 0f), boundry.transform.rotation
+		) as GameObject;
+		rightB.transform.localScale = new Vector3 (1f, 30f, maxHeight);
+		rightB.SetActive (true);
+		// Left
+		GameObject leftB = Instantiate (
+			boundry, new Vector3(-offsetX, boundry.transform.position.y, 0f), boundry.transform.rotation
+		) as GameObject;
+		leftB.transform.localScale = new Vector3 (1f, 30f, maxHeight);
+		leftB.SetActive (true);
+		// Bottom
+		GameObject bottomB = Instantiate (
+			boundry, new Vector3(0f, boundry.transform.position.y, -offsetZ), boundry.transform.rotation
+		) as GameObject;
+		bottomB.transform.localScale = new Vector3 (maxWidth, 30f, 1f);
+		bottomB.SetActive (true);
 
 		for (int i = 0; i < floorDesc.Length; i++) {
 			actualWidth = 0f;
