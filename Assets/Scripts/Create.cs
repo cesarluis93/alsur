@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class Create : MonoBehaviour {
 	// To create enemies
@@ -19,6 +20,9 @@ public class Create : MonoBehaviour {
 	public List<GameObject> enviormentObjects;
 	public GameObject boundry;
 
+	// UI stuff
+	public GameObject bossInfo;
+
 	void Start () {
 		createMap (jsonMap, floorObjects, enviormentObjects);
 		Globals.enemiesLeft = enemiesPerWave;
@@ -36,7 +40,7 @@ public class Create : MonoBehaviour {
 		else if (!bossa && Globals.waveCount > waves && Globals.enemiesLeft == 0) {
 			bossa = true;
 			Globals.enemiesLeft++;
-			createBoss (boss, minX, maxX, minZ, maxZ);
+			createBoss (boss, minX, maxX, minZ, maxZ, bossInfo);
 		}
 		else if (bossa && Globals.waveCount > waves && Globals.enemiesLeft == 0) {
 			bossa = true;
@@ -207,7 +211,10 @@ public class Create : MonoBehaviour {
 		}
 	}
 
-	public void createBoss(GameObject boss, float minX, float maxX, float minZ, float maxZ){
+	public void createBoss(GameObject boss, float minX, float maxX, float minZ, float maxZ, GameObject UIInfo){
+		// Show Boss info 
+		UIInfo.SetActive(true);
+
 		GameObject choosenEnemy = boss;
 		Vector3 rPosition = new Vector3 (Random.Range (minX, maxX), choosenEnemy.transform.position.y, Random.Range (minZ, maxZ));
 		GameObject insEnemy = Instantiate (choosenEnemy, rPosition, choosenEnemy.transform.rotation) as GameObject;

@@ -6,7 +6,6 @@
 using UnityEngine;
 using System.Collections;
 
-
 [RequireComponent(typeof (Animator))]
 [RequireComponent(typeof (CapsuleCollider))]
 [RequireComponent(typeof (Rigidbody))]

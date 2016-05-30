@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class HealthScript : MonoBehaviour {
 	public float healthPoints = 100;
@@ -8,6 +9,14 @@ public class HealthScript : MonoBehaviour {
 	private Animator anim=null;
 	private GUIStyle labelStyle;
 	private Rigidbody rbody;
+
+	// UI Stuff
+	public Slider healthSlider;
+	public Image damageImage;
+	public Color flashColour = new Color (1f, 0f, 0f, 0.1f);
+	public float flashSpeed;
+	bool damaged;
+
 	void Start(){
 		if(gameObject.tag!="stageBase"){
 			anim = GetComponent<Animator> ();
@@ -18,9 +27,27 @@ public class HealthScript : MonoBehaviour {
 		labelStyle.normal.textColor = new Color(0.2F, 0.6F, 1.0F, 1.0F);
 	}
 
+	void Update(){
+		if (damaged != null && damageImage != null && flashSpeed != null && this.gameObject.tag == "Player") {
+			if (damaged) {
+				damageImage.color = flashColour;
+			} else {
+				damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
+			}
+			damaged = false;
+		}
+	}
+
 	bool ApplyDamage(float damage){
 		healthPoints -= damage;
 		Debug.Log ("Health Point: "+healthPoints);
+
+		// UI
+		this.damaged = true;
+		if (healthSlider != null) {
+			healthSlider.value = healthPoints;
+		}
+
 		if (healthPoints <= 0) {
 			if (!dead) {
 				if (anim != null) {
@@ -39,7 +66,7 @@ public class HealthScript : MonoBehaviour {
 			}
 			dead = false;
 		}
-
+			
 		return dead;
 	}
 
@@ -73,6 +100,7 @@ public class HealthScript : MonoBehaviour {
 	}
 
 	void OnGUI() {
+		/*
 		if (this.gameObject.tag == "Player") {
 			GUI.Label(new Rect(10, 10, 100, 20), "Enemies Left: " + Globals.enemiesLeft.ToString(), labelStyle);
 			GUI.Label(new Rect(10, 40, 100, 20), "Health: " + healthPoints.ToString(), labelStyle);
@@ -80,5 +108,6 @@ public class HealthScript : MonoBehaviour {
 			//Debug.Log ("Score: " + score);
 			//Debug.Log ("Health: " + healthPoints);		
 		}
+		*/
 	}
 }
