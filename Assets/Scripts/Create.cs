@@ -158,6 +158,7 @@ public class Create : MonoBehaviour {
 					GameObject floorInst = Instantiate (
 						floorElement, new Vector3(startX + actualWidth, floorElement.transform.position.y, startZ + actualHeight), floorElement.transform.rotation
 					) as GameObject;
+					floorInst.tag = "floor";
 					floorInst.SetActive (true);
 					actualWidth += sizes [floorIndex].x;
 					lastHeight = sizes [floorIndex].z;

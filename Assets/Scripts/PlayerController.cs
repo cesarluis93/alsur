@@ -21,7 +21,8 @@ public class PlayerController : MonoBehaviour
 	public float forwardSpeed = 7.0f;
 	public float backwardSpeed = 2.0f;
 	public float rotateSpeed = 2.0f;
-	public float jumpPower = 7.0f; 
+	public float jumpPower = 7.0f;
+	public float activationRange = 20f;
 	private CapsuleCollider col;
 	private Rigidbody rb;
 	private Vector3 velocity;
@@ -32,6 +33,7 @@ public class PlayerController : MonoBehaviour
 	private GameObject cameraObject;	
 	public GameObject selectedWeapon;
 	public GameObject selectedItem; 
+	private RaycastHit hit;
 
 	static int idle_cState = Animator.StringToHash("Base Layer.Idle_C");
 	static int idle_aState = Animator.StringToHash("Base Layer.Idle_A");
@@ -77,6 +79,19 @@ public class PlayerController : MonoBehaviour
 			selectedItem.SetActive (true);
 			Destroy (selectedItem, itemTime);
 			grabItem = false;
+		}
+		else if(Input.GetKey(KeyCode.Q)){
+			Debug.Log ("fired");
+			Vector3 emitter = new Vector3 (
+				transform.position.x,
+				transform.position.y + 0.5f,
+				transform.position.z
+			);
+			if(Physics.Raycast(emitter, transform.forward, out hit, activationRange)){
+				Debug.Log ("hitcar");
+				hit.transform.SendMessage ("Activate");
+
+			}
 		}
 		velocity = new Vector3(0, 0, v);
 		velocity = transform.TransformDirection(velocity);
@@ -189,8 +204,11 @@ public class PlayerController : MonoBehaviour
 
 	void OnCollisionEnter(Collision other){
 		Collider weaponCollider = null;
+		Rigidbody temp;
 		if (other.gameObject.CompareTag ("weapon")) {
 			if (selectedWeapon != null) {
+				temp = selectedWeapon.GetComponent<Rigidbody> ();
+				temp.useGravity = true;
 				selectedWeapon.transform.localPosition = new Vector3 (2f, 4f, 1f);
 				selectedWeapon.transform.parent = null;
 				selectedWeapon.transform.localScale = new Vector3 (1f, 1f, 1f);
@@ -204,6 +222,8 @@ public class PlayerController : MonoBehaviour
 			selectedWeapon.transform.parent = this.transform;
 			selectedWeapon.transform.localPosition = new Vector3 (0.5f, 0, 0);
 			selectedWeapon.transform.localScale = new Vector3 (0, 0, 0);
+			temp = selectedWeapon.GetComponent<Rigidbody> ();
+			temp.useGravity = false;
 		}
 		else if (other.gameObject.CompareTag ("item")) {
 			if (selectedItem != null) {

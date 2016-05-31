@@ -6,6 +6,9 @@ public class MeleeAttackScript : MonoBehaviour {
 	private Vector3 forward;
 	RaycastHit hit;
 
+	void Update(){
+	}
+
 	void Fire(GameObject gameobject){
 		Animator anim = gameobject.GetComponent<Animator> ();
 		Debug.Log ("fired");

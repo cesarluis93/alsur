@@ -8,6 +8,7 @@ public class GameOver : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		Globals.waveCount = 0;
 		#if UNITY_WEBPLAYER
 		print("Not Going To Read That File!");
 		#else
