@@ -26,6 +26,10 @@ public class EnemyScript : MonoBehaviour {
 			Quaternion.identity
 		) as GameObject;
 		selectedWeapon.transform.localScale = Vector3.zero;
+		SkinnedMeshRenderer rend = selectedWeapon.GetComponent<SkinnedMeshRenderer> ();
+		rend.enabled = false;
+		Collider coll = selectedWeapon.GetComponent<Collider> ();
+		coll.enabled = false;
 	}
 	
 	// Update is called once per frame

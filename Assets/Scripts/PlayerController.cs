@@ -214,6 +214,8 @@ public class PlayerController : MonoBehaviour
 				selectedWeapon.transform.localScale = new Vector3 (1f, 1f, 1f);
 				weaponCollider = selectedWeapon.GetComponent<Collider> ();
 				weaponCollider.enabled = true;
+				SkinnedMeshRenderer rend = selectedWeapon.GetComponent<SkinnedMeshRenderer> ();
+				rend.enabled = true;
 			}
 			Debug.Log ("Picked up");
 			selectedWeapon = other.gameObject;
@@ -224,6 +226,8 @@ public class PlayerController : MonoBehaviour
 			selectedWeapon.transform.localScale = new Vector3 (0, 0, 0);
 			temp = selectedWeapon.GetComponent<Rigidbody> ();
 			temp.useGravity = false;
+			SkinnedMeshRenderer rend1 = selectedWeapon.GetComponent<SkinnedMeshRenderer> ();
+			rend1.enabled = false;
 		}
 		else if (other.gameObject.CompareTag ("item")) {
 			if (selectedItem != null) {

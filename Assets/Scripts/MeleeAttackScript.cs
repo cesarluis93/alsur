@@ -22,6 +22,9 @@ public class MeleeAttackScript : MonoBehaviour {
 			Debug.Log ("hit");
 			hit.transform.SendMessage ("ApplyDamage", Globals.meleeDamage);
 			gameobject.SendMessage ("AddScore", Globals.meleeScore);
+			AudioSource audio = GetComponent<AudioSource> ();
+			audio.pitch = 2.0f;
+			audio.Play ();
 		}
 	}
 }

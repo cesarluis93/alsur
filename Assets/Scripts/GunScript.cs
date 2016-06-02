@@ -120,7 +120,8 @@ public class GunScript : MonoBehaviour {
 		else {
 			Temporary_Bullet_Handler.tag = "eBullet";
 		}
-
+		AudioSource audio = GetComponent<AudioSource> ();
+		audio.Play ();
 		Destroy(Temporary_Bullet_Handler, bulletTime);	
 	}
 }
