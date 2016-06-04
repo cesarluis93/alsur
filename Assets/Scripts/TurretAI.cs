@@ -6,6 +6,7 @@ public class TurretAI : MonoBehaviour {
 	public GameObject gun;
 	private float cooldown;
 	public float cooldownTime = 7f;
+	public float lifeTime = 10f;
 
     public enum AiStates{NEAREST, FURTHEST};
  
@@ -23,7 +24,7 @@ public class TurretAI : MonoBehaviour {
 		gun = Instantiate (gun,this.transform.position,
 			Quaternion.identity) as GameObject;
 		gun.transform.localScale = Vector3.zero;
-		
+		Destroy (this.transform.parent.gameObject, lifeTime);
     }
  
     // Update is called once per frame

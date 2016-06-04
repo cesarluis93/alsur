@@ -13,7 +13,6 @@ public class PlayerScript : MonoBehaviour {
 	private float cooldown;
 	public GameObject selectedWeapon = null;
 	private GameObject selectedItem;
-	public float itemTime;
 	private bool grabItem;
 	private string pauseButtonText = "Pause";
 
@@ -27,7 +26,6 @@ public class PlayerScript : MonoBehaviour {
 		rbody = GetComponent<Rigidbody> ();
 		selectedItem = null;
 		grabItem = false;
-		itemTime = 15f;
 	}
 	
 	// Update is called once per frame
@@ -46,7 +44,6 @@ public class PlayerScript : MonoBehaviour {
 		else if (grabItem && selectedItem != null && CrossPlatformInputManager.GetButton ("Jump")) {
 			selectedItem = Instantiate (selectedItem, this.transform.position, this.transform.rotation) as GameObject;
 			selectedItem.SetActive (true);
-			Destroy (selectedItem, itemTime);
 			grabItem = false;
 		}
 	}

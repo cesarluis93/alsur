@@ -7,6 +7,7 @@ public class Globals : MonoBehaviour {
 	public static float meleeScore = 30f;
 	public static float rangeScore = 20f;
 	public static float carDamage = 100f;
+	public static float bombDamage = 60f;
 	public static int enemiesLeft = 0;
 	public static int waveCount = 0;
 	public static GameObject player;

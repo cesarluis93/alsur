@@ -44,7 +44,6 @@ public class PlayerController : MonoBehaviour
 	public float cooldownTime = 100f;
 	private float cooldown;	
 	private bool grabItem = false;
-	public float itemTime;
 
 	void Start ()
 	{
@@ -75,9 +74,15 @@ public class PlayerController : MonoBehaviour
 		}
 		if (grabItem && selectedItem != null && Input.GetKeyDown(KeyCode.E)) {
 			Debug.Log ("Item used");
-			selectedItem = Instantiate (selectedItem, this.transform.position, this.transform.rotation) as GameObject;
+			Vector3 position;
+			if (selectedItem.tag == "fBomb") {
+				// Instiate one above
+				position = new Vector3 (this.transform.position.x, this.transform.position.y + 1, this.transform.position.z);
+			} else {
+				position = this.transform.position;
+			}
+			selectedItem = Instantiate (selectedItem, position, this.transform.rotation) as GameObject;
 			selectedItem.SetActive (true);
-			Destroy (selectedItem, itemTime);
 			grabItem = false;
 		}
 		else if(Input.GetKey(KeyCode.Q)){
