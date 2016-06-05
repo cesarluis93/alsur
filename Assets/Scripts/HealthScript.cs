@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class HealthScript : MonoBehaviour {
+	public float maxHealth = 100;
 	public float healthPoints = 100;
 	public float score = 0;
 	bool dead = false;
@@ -99,15 +100,16 @@ public class HealthScript : MonoBehaviour {
 		}
 	}
 
-	void OnGUI() {
-		/*
-		if (this.gameObject.tag == "Player") {
-			GUI.Label(new Rect(10, 10, 100, 20), "Enemies Left: " + Globals.enemiesLeft.ToString(), labelStyle);
-			GUI.Label(new Rect(10, 40, 100, 20), "Health: " + healthPoints.ToString(), labelStyle);
-			GUI.Label(new Rect(10, 70, 100, 20), "Wave: " + Globals.waveCount.ToString(), labelStyle);
-			//Debug.Log ("Score: " + score);
-			//Debug.Log ("Health: " + healthPoints);		
+	public void addHealth(float extraHealth){
+		float possibleHealth = extraHealth + healthPoints;
+		// Max health is going to be maxHealth, so check if it passes it
+		if (possibleHealth > maxHealth) {
+			possibleHealth = 100;
 		}
-		*/
+		healthPoints = possibleHealth;
+
+		if (healthSlider != null) {
+			healthSlider.value = healthPoints;
+		}
 	}
 }
