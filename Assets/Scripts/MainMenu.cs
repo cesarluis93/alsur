@@ -35,7 +35,7 @@ public class MainMenu : MonoBehaviour {
 		) {
 			Application.LoadLevel("Level 1 - Assets");
 		}
-
+		/*
 		// Stage Selection
 		if (GUI.Button(
 			new Rect(Screen.width / 2 - 75, Screen.height /2 + 70, 150, 25),
@@ -44,7 +44,7 @@ public class MainMenu : MonoBehaviour {
 		)  {
 			Application.LoadLevel("Level 1 - Assets");
 		}
-
+		*/
 		// Quit
 		if (GUI.Button(
 			new Rect(Screen.width / 2 - 75, Screen.height /2 + 100, 150, 25),
