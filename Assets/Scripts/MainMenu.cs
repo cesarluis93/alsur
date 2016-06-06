@@ -35,16 +35,14 @@ public class MainMenu : MonoBehaviour {
 		) {
 			Application.LoadLevel("Level 1 - Assets");
 		}
-		/*
 		// Stage Selection
 		if (GUI.Button(
 			new Rect(Screen.width / 2 - 75, Screen.height /2 + 70, 150, 25),
 			"Stage Selection"
 		)
 		)  {
-			Application.LoadLevel("Level 1 - Assets");
+			Application.LoadLevel("StageSelector");
 		}
-		*/
 		// Quit
 		if (GUI.Button(
 			new Rect(Screen.width / 2 - 75, Screen.height /2 + 100, 150, 25),
