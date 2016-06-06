@@ -17,6 +17,8 @@ public class MainMenu : MonoBehaviour {
 		texture = new Texture2D(1024, 768);
 		texture.LoadImage(fileData); 
 		#endif
+		Globals.win = false;
+		Globals.level = 1;
 	}
 
 	// Update is called once per frame
@@ -34,6 +36,7 @@ public class MainMenu : MonoBehaviour {
 		)
 		) {
 			Application.LoadLevel("Level 1 - Assets");
+			Globals.level = 1;
 		}
 		// Stage Selection
 		if (GUI.Button(

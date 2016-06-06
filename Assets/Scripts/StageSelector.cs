@@ -44,6 +44,7 @@ public class StageSelector : MonoBehaviour {
 			level1Texture
 		)
 		) {
+			Globals.level = 1;
 			Application.LoadLevel("Level 1 - Assets");
 		}
 
@@ -52,6 +53,7 @@ public class StageSelector : MonoBehaviour {
 			level2Texture
 		)
 		) {
+			Globals.level = 2;
 			Application.LoadLevel("Level 2 - Assets");
 		}
 
@@ -60,6 +62,7 @@ public class StageSelector : MonoBehaviour {
 			level3Texture
 		)
 		) {
+			Globals.level = 3;
 			Application.LoadLevel("Level 3 - Assets");
 		}
 

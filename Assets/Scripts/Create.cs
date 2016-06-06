@@ -19,6 +19,7 @@ public class Create : MonoBehaviour {
 	public List<GameObject> floorObjects;
 	public List<GameObject> enviormentObjects;
 	public GameObject boundry;
+	public GameObject bossInstance;
 
 	// UI stuff
 	public GameObject bossInfo;
@@ -40,11 +41,12 @@ public class Create : MonoBehaviour {
 		else if (!bossa && Globals.waveCount > waves && Globals.enemiesLeft == 0) {
 			bossa = true;
 			Globals.enemiesLeft++;
-			createBoss (boss, minX, maxX, minZ, maxZ, bossInfo);
+			bossInstance = createBoss (boss, minX, maxX, minZ, maxZ, bossInfo);
 		}
 		else if (bossa && Globals.waveCount > waves && Globals.enemiesLeft == 0) {
 			bossa = true;
 			Globals.win = true;
+			Application.LoadLevel("StageEnd");
 		}
 	}
 
@@ -212,7 +214,7 @@ public class Create : MonoBehaviour {
 		}
 	}
 
-	public void createBoss(GameObject boss, float minX, float maxX, float minZ, float maxZ, GameObject UIInfo){
+	public GameObject createBoss(GameObject boss, float minX, float maxX, float minZ, float maxZ, GameObject UIInfo){
 		// Show Boss info 
 		UIInfo.SetActive(true);
 
@@ -220,5 +222,6 @@ public class Create : MonoBehaviour {
 		Vector3 rPosition = new Vector3 (Random.Range (minX, maxX), choosenEnemy.transform.position.y, Random.Range (minZ, maxZ));
 		GameObject insEnemy = Instantiate (choosenEnemy, rPosition, choosenEnemy.transform.rotation) as GameObject;
 		insEnemy.SetActive (true);
+		return insEnemy;
 	}
 }

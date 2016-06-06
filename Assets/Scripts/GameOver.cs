@@ -5,7 +5,9 @@ public class GameOver : MonoBehaviour {
 
 	public Texture gameOverTexture;
 	Texture2D texture = null;
-
+	string stageText="";
+	string level = "";
+	int nextLevel=0;
 	// Use this for initialization
 	void Start () {
 		Globals.waveCount = 0;
@@ -27,18 +29,7 @@ public class GameOver : MonoBehaviour {
 		texture = new Texture2D(1024, 768);
 		texture.LoadImage(fileData); 
 		#endif
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-	void OnGUI()
-	{
-		string stageText="";
-		string level = "";
-		int nextLevel=0;
+		Debug.Log ("gui");
 		if (Globals.win) {
 			if (Globals.level > 0 && Globals.level < 3) {
 				stageText = "Next stage";
@@ -55,6 +46,16 @@ public class GameOver : MonoBehaviour {
 			level = "Level " + (Globals.level) + " - Assets";
 			nextLevel = Globals.level;
 		}
+	}
+	
+	// Update is called once per frame
+	void Update () {
+	
+	}
+
+	void OnGUI()
+	{
+		
 		GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), texture);
 
 		// Try again
